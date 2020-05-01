@@ -24,6 +24,7 @@ be logged.
 
 Example
 -------
+This example crops all points outside of a 2D polygon.
 
 .. code-block:: json
 
@@ -38,13 +39,33 @@ Example
           "filename":"file-cropped.las"
       }
   ]
+  
+  
+Example 2
+-------
+This example crops all points 500 units away in any direction (i.e, a sphere) from a point. 
+
+.. code-block:: json
+
+  [
+      "file-input.las",
+      {
+          "type":"filters.crop",
+          "point":"POINT(0 0 0)",
+          "distance": 500
+      },
+      {
+          "type":"writers.las",
+          "filename":"file-cropped.las"
+      }
+  ]
 
 Options
 -------
 
 bounds
   The extent of the clipping rectangle in the format
-  "([xmin, xmax], [ymin, ymax])".  This option can be specified more than
+  ``"([xmin, xmax], [ymin, ymax])"``.  This option can be specified more than
   once by placing values in an array.
 
 
@@ -59,7 +80,7 @@ bounds
 
 polygon
   The clipping polygon, expressed in a well-known text string,
-  eg: "POLYGON((0 0, 5000 10000, 10000 0, 0 0))".  This option can be
+  eg:  ``"POLYGON((0 0, 5000 10000, 10000 0, 0 0))"``.  This option can be
   specified more than once by placing values in an array.
 
 outside
@@ -67,11 +88,11 @@ outside
   bounds or polygon. [Default: false]
 
 _`point`
-  An array of WKT or GeoJSON 2D or 3D points. Requires distance_.
+  An array of WKT or GeoJSON 2D or 3D points, eg: ``"POINT(0 0)"``. Requires distance_.
 
 _`distance`
-  Distance in units of common X, Y, and Z :ref:`dimensions` to crop circle
-  or sphere in combination with point_.
+  Distance (radius) in units of common X, Y, and Z :ref:`dimensions` to crop using a circle
+  or sphere in combination with point_. Passing a 2D point will crop with a circle. Passing a 3D point will crop with a sphere.
 
 _`a_srs`
   Indicates the spatial reference of the bounding regions.  If not provided,
